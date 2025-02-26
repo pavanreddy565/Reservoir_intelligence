@@ -1,0 +1,7 @@
+pip install flask
+pip install supabase
+pip install pandas
+pip install dotenv
+pip install flask_cors
+pip install torch
+pip install bs4

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: rgba(135, 206, 235, 0.5);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #4CAF50;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .member {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      animation: slideUp 1.5s ease-in-out;
+    }
+    a{
+        text-decoration: none;
+    }
+    .member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .member img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 4px solid #4CAF50;
+      transition: transform 0.3s ease;
+    }
+
+    .member img:hover {
+      transform: scale(1.1);
+    }
+
+    .member h3 {
+      font-size: 1.6rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .member p {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>About Us</h1>
+    <p>
+      This project is supervised by <strong>Sridevi Bonthu</strong>, Assistant Professor in the Department of Computer Science and Engineering at Vishnu Institute of Technology, Bhimavaram. It has been developed by a team of dedicated undergraduate students.
+    </p>
+
+    <div class="team">
+      <!-- Supervisor -->
+      <a href="https://www.linkedin.com/in/sridevi-bonthu" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/C5103AQEWjqlgrGW4mA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1541839039807?e=1746057600&v=beta&t=ae2X-arAz5FinCqgBny-Rz5yjUDXaLtyuVI6bQU453M" alt="Sridevi Bonthu">
+        <h3>Sridevi Bonthu</h3>
+        <p>Assistant Professor<br>Computer Science and Engineering</p>
+      </a>
+
+      <!-- Developer 1 -->
+      <a href="https://www.linkedin.com/in/pavanreddy92b00b258" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/D5635AQEPkCQT0x6AEg/profile-framedphoto-shrink_200_200/profile-framedphoto-shrink_200_200/0/1711690986881?e=1741111200&v=beta&t=tFhnZjoDTh9uD33FfOZqabNet6pUoqzTCATf8ifDV6I" alt="Satti Pavan Reddy">
+        <h3>Satti Pavan Reddy</h3>
+        <p>Undergraduate Student<br>Computer Science and Engineering</p>
+      </a>
+
+      <!-- Developer 2 -->
+      <a href="https://www.linkedin.com/in/raghuram-manikanta-ba0518280" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/D4E35AQGuiCNPgVvvpw/profile-framedphoto-shrink_100_100/B4EZUyCoOFG0Ak-/0/1740301304953?e=1741111200&v=beta&t=YcB-6YcZrrKkeaV5KJEJ_sb8Mwfo1CJYn2AWpVKcFaA" alt="Sandu Raghuram Manikanta">
+        <h3>Sandu Raghuram</h3>
+        <p>Undergraduate Student<br>Computer Science and Engineering</p>
+      </a>
+
+      <!-- Developer 3 -->
+      <a href="https://www.linkedin.com/in/nithinram03" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/D5635AQGuoUW-xuPCOg/profile-framedphoto-shrink_100_100/profile-framedphoto-shrink_100_100/0/1715682965111?e=1741111200&v=beta&t=qlHrchcd9N-9baD8JNKAZp28XviKwSceXSQ6fIPAIP0" alt="Putti Nithin Ram">
+        <h3>Putti Nithin Ram</h3>
+        <p>Undergraduate Student<br>Computer Science and Engineering</p>
+      </a>
+
+      <!-- Developer 4 -->
+      <a href="https://www.linkedin.com/in/setty-likhitha-8495b2280" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/D5635AQF1KrBiyT6Ofg/profile-framedphoto-shrink_200_200/profile-framedphoto-shrink_200_200/0/1735554458282?e=1741111200&v=beta&t=3MDJHPkhna_GAHvCi3kEjT3xmsAyMsNGmEJVF8-Ni2Y" alt="Setty Likhitha">
+        <h3>Setty Likhitha</h3>
+        <p>Undergraduate Student<br>Computer Science and Engineering</p>
+      </a>
+
+      <!-- Developer 5 -->
+      <a href="https://www.linkedin.com/in/kadurla-yasodha" target="_blank" class="member">
+        <img src="https://media.licdn.com/dms/image/v2/D5635AQH2NkHvlU2BlA/profile-framedphoto-shrink_200_200/profile-framedphoto-shrink_200_200/0/1739091820064?e=1741111200&v=beta&t=x4nLgA4e7LpixNtnAFyaye1huquFmZgt0aMF2p8Dlv4" alt="Kadurala Yashodha">
+        <h3>Kadurala Yashodha</h3>
+        <p>Undergraduate Student<br>Artificial Intelligence and Machine Learning</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

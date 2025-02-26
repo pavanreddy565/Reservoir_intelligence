@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflow and Outflow Analysis</title>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+		*{
+			box-sizing: border-box;
+			padding:0;
+			margin:0;
+		}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+			background-color: rgba(135, 206, 235, 0.5);
+        }
+        h2, h4 {
+            text-align: center;
+        }
+        .container {
+            max-width: 100vw;
+           
+			
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .col {
+            flex: 1;
+            margin: 0 10px;
+			border-radius: 2em;
+			padding: .75em;
+			background-color:white;
+			
+			/*background-color:red;*/
+			
+        }
+        #areaPlot, #barPlot {
+            width: 100%;
+            height: 400px;
+        }
+		.table-container{
+			background-color: white;
+			padding:2em;
+			border-radius:2em;
+		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+		.navBar{
+			width:100%;
+			display:flex;
+			align-items: center;
+			justify-content:space-between;
+			padding-left:2em;
+			
+		}
+		nav{
+            /* background-color: red; */
+            padding: 1em 2.5em;
+            display: flex;
+            justify-content: flex-end;
+        }
+        nav ul{
+            display: flex;
+            width: fit-content;
+            gap:1em;
+            /* background-color: green; */
+            justify-content: center;
+            align-items: flex-end;
+            gap:2.5em;
+            list-style: none;
+        }
+        nav ul li a{
+            color: black;
+            font-size: 1.4em;
+            text-underline-offset: .3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+		<div class="navBar">
+			<h2>Supply and Demand Analysis</h2>
+			<nav>
+				
+						<ul>
+							<li><a href="/Home">Home</a></li>
+							<li><a href="/current_status">Current Status</a></li>
+							<li><a href="/forecast">Forecast</a></li>
+							<li><a href="/resource">Resources</a></li>
+							<li><a href="/about">AboutUs</a></li>
+						</ul>
+					</nav>
+		</div>
+        <!-- Row for Plots -->
+        <div class="row">
+            <!-- Area Plot -->
+            <div class="col">
+                <div id="areaPlot"></div>
+            </div>
+            <!-- Bar Plot -->
+            <div class="col">
+                <div id="barPlot"></div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+			<h4>Detailed Data</h4>
+			<table id="dataTable">
+				<thead>
+					<!-- Table headers will be dynamically populated here -->
+				</thead>
+				<tbody>
+					<!-- Table rows will be dynamically populated here -->
+				</tbody>
+			</table>
+		</div>
+    </div>
+
+    <script>
+        // Helper function to format date as 'dd-mm-yyyy'
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = date.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        // Fetch data from endpoints
+        async function fetchData() {
+            const demandResponse = await fetch('/getDemand');
+            const supplyResponse = await fetch('/getSupply');
+            const tableResponse = await fetch('/getTable');
+
+            const demandData = await demandResponse.json();
+            const supplyData = await supplyResponse.json();
+            const tableData = await tableResponse.json();
+
+            return { demandData, supplyData, tableData };
+        }
+
+        // Function to create the area plot
+        function createAreaPlot(demandData, supplyData) {
+            const trace1 = {
+                x: demandData.map(row => formatDate(row.Date)),
+                y: demandData.map(row => row.Outflow),
+                name: 'Demand',
+                mode: 'lines',
+                fill: 'tozeroy',
+                marker: { color: '#1f77b4' },
+                opacity: 0.5
+            };
+
+            const trace2 = {
+                x: supplyData.map(row => formatDate(row.Date)),
+                y: supplyData.map(row => row.Supply_Outflow),
+                name: 'Supply',
+                mode: 'lines',
+                fill: 'tozeroy',
+                marker: { color: '#d62728' },
+                opacity: 0.5
+            };
+
+            const layout = {
+                title: "Demand and Supply Over Time",
+                xaxis: { 
+                    title: "Date",
+                    //tickangle: 0 // Horizontal labels
+                },
+				margin: { t: 50, b: 100 },
+                yaxis: { title: "Flow (cusecs)" },
+                hovermode: "x unified"
+            };
+
+            Plotly.newPlot('areaPlot', [trace1, trace2], layout);
+        }
+
+        // Function to create the bar plot
+        function createBarPlot(demandData, supplyData) {
+            const trace1 = {
+                x: demandData.slice(0, 7).map(row => formatDate(row.Date)),
+                y: demandData.slice(0, 7).map(row => row.Outflow),
+                name: 'Demand',
+                type: 'bar',
+                marker: { color: '#2ca02c', opacity: 0.8 } // Green color
+            };
+
+            const trace2 = {
+                x: supplyData.slice(0, 7).map(row => formatDate(row.Date)),
+                y: supplyData.slice(0, 7).map(row => row.Supply_Outflow),
+                name: 'Supply',
+                type: 'bar',
+                marker: { color: '#ff7f0e', opacity: 0.8 } // Orange color
+            };
+
+            const layout = {
+                title: "Demand vs Supply Comparison (First 7 Days)",
+                xaxis: { 
+                    title: "Date",
+                   // tickangle: 0 // Horizontal labels
+                },
+                yaxis: { title: "Flow (cusecs)" },
+                barmode: "overlay",
+                bargap: 0.2
+            };
+
+            Plotly.newPlot('barPlot', [trace1, trace2], layout);
+        }
+
+        // Function to populate the table
+        function populateTable(tableData) {
+            const table = document.getElementById('dataTable');
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+
+            // Clear existing content
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            if (tableData.length === 0) return;
+
+            // Define the desired column order
+            const desiredOrder = [
+                "Date",
+                "Chembarambakkam_outflow",
+                "Redhills_outflow",
+                "Supply (cusecs)",
+                "Demand (cusecs)"
+            ];
+
+            // Create table headers based on the desired order
+            const headerRow = document.createElement('tr');
+            desiredOrder.forEach(column => {
+                const th = document.createElement('th');
+                th.textContent = column;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // Populate table rows with rounded values
+            tableData.forEach(row => {
+                const tr = document.createElement('tr');
+                desiredOrder.forEach(column => {
+                    const td = document.createElement('td');
+                    let value = row[column];
+                    if (column === "Date") {
+                        value = formatDate(value); // Format date
+                    } else if (typeof value === 'number') {
+                        value = value.toFixed(2); // Round numeric values
+                    }
+                    td.textContent = value;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Main function to initialize the page
+        async function init() {
+            try {
+                const { demandData, supplyData, tableData } = await fetchData();
+
+                // Create plots
+                createAreaPlot(demandData, supplyData);
+                createBarPlot(demandData, supplyData);
+
+                // Populate table
+                populateTable(tableData);
+            } catch (error) {
+                console.error("Error fetching or processing data:", error);
+            }
+        }
+
+        // Initialize the page
+        init();
+    </script>
+</body>
+</html>
