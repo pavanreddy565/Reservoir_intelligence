@@ -29,7 +29,7 @@ Ensure you have Python installed on your system. If not, download it from [pytho
 
 3. Create and activate a virtual environment:
    ```bash
-   pip install venv
+   pip install virtualenv
    python -m venv myVenv
    .\myVenv\Scripts\activate
    ```
